@@ -1,0 +1,45 @@
+{
+  "name": "Simple Gear Train",
+  "description": "A 3-step gear train demonstrating transmission chain analysis",
+  "prompt": "A simple gear reduction for slow rotation",
+  "transmissionChain": [
+    {
+      "step": 1,
+      "part": "Motor",
+      "type": "actuator",
+      "specs": { "rpm": 300, "torque_Nm": 0.1 }
+    },
+    {
+      "step": 2,
+      "part": "Spur Gear 12T",
+      "type": "gear",
+      "specs": { "teeth": 12, "module": 1.0 }
+    },
+    {
+      "step": 3,
+      "part": "Spur Gear 36T",
+      "type": "gear",
+      "specs": { "teeth": 36, "module": 1.0 }
+    },
+    {
+      "step": 4,
+      "part": "Output Axle",
+      "type": "structure",
+      "specs": { "diameter_mm": 4, "length_mm": 40 }
+    }
+  ],
+  "metrics": {
+    "chainLength": 4,
+    "gearRatio": 3.0,
+    "outputRPM": 100,
+    "outputTorque_Nm": 0.3
+  },
+  "complexityScores": {
+    "structureScore": 3,
+    "electronicScore": 1,
+    "logicScore": 1,
+    "complexityScore": 3,
+    "metricsHash": "0x8a3b5c7d9e1f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a"
+  },
+  "note": "This is a simplified example. The full CoM inference engine generates these chains from natural language prompts automatically."
+}

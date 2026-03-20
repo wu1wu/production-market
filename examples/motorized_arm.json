@@ -1,0 +1,43 @@
+{
+  "name": "4-DOF Robotic Arm",
+  "description": "A motorized robotic arm with sensors and closed-loop control",
+  "prompt": "A robotic arm that can pick up a cup gently",
+  "transmissionChain": [
+    { "step": 1, "part": "Motor-1 (Shoulder)", "type": "actuator" },
+    { "step": 2, "part": "Worm Gear", "type": "gear" },
+    { "step": 3, "part": "Worm Wheel 40T", "type": "gear" },
+    { "step": 4, "part": "Shoulder Joint Axle", "type": "structure" },
+    { "step": 5, "part": "Motor-2 (Elbow)", "type": "actuator" },
+    { "step": 6, "part": "Bevel Gear 16T", "type": "gear" },
+    { "step": 7, "part": "Bevel Gear 24T", "type": "gear" },
+    { "step": 8, "part": "Elbow Joint Axle", "type": "structure" },
+    { "step": 9, "part": "Motor-3 (Wrist)", "type": "actuator" },
+    { "step": 10, "part": "Spur Gear 8T", "type": "gear" },
+    { "step": 11, "part": "Spur Gear 24T", "type": "gear" },
+    { "step": 12, "part": "Gripper Mechanism", "type": "end_effector" }
+  ],
+  "io": {
+    "outputs": [
+      { "name": "Motor-1", "type": "DC Motor", "signal": "PWM", "voltage": "5V" },
+      { "name": "Motor-2", "type": "DC Motor", "signal": "PWM", "voltage": "5V" },
+      { "name": "Motor-3", "type": "DC Motor", "signal": "PWM", "voltage": "5V" },
+      { "name": "Motor-4 (Grip)", "type": "Servo", "signal": "PWM", "voltage": "5V" }
+    ],
+    "inputs": [
+      { "name": "Force Sensor", "type": "Analog", "signal": "ADC", "voltage": "3.3V" },
+      { "name": "Position Encoder", "type": "Digital", "signal": "Quadrature", "voltage": "5V" }
+    ]
+  },
+  "controlLogic": {
+    "states": ["IDLE", "APPROACH", "ALIGN", "GRIP", "LIFT", "HOLD", "PLACE", "RELEASE"],
+    "feedbackLoops": ["PID_position", "force_limit"],
+    "transitionCount": 10
+  },
+  "complexityScores": {
+    "structureScore": 12,
+    "electronicScore": 6,
+    "logicScore": 8,
+    "complexityScore": 576,
+    "metricsHash": "0x1f2e3d4c5b6a7980a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4d"
+  }
+}
