@@ -166,10 +166,16 @@
 <div class="slide" id="s1">
     <div class="logo">▣ PRODUCTION MARKET</div>
     <div class="slide-num">01 / 10</div>
-    <h1>What if <span class="accent">hardware ideas</span><br>could earn money<br><span class="dim">before</span> they're built?</h1>
-    <p class="sub">
-        99% of hardware ideas die because prototyping is too hard, too expensive, and nobody gets paid for partial work.
-    </p>
+    <div style="display:flex;align-items:center;gap:50px;width:90%;max-width:1100px;">
+        <div style="flex:1.2;">
+            <h1 style="text-align:left;">What if <span class="accent">hardware ideas</span><br>could earn money<br><span class="dim">before</span> they're built?</h1>
+            <p class="sub" style="text-align:left;">99% of hardware ideas die because prototyping is too hard, too expensive, and nobody gets paid for partial work.</p>
+        </div>
+        <div style="flex:0.8;text-align:center;">
+            <img src="img/parts_library.png" style="max-height:350px;border-radius:16px;opacity:0.85;" alt="Parts Library">
+            <div style="font-size:0.7em;color:rgba(255,255,255,0.2);margin-top:8px;">1000+ modular building blocks</div>
+        </div>
+    </div>
 </div>
 
 <!-- ========== SLIDE 2: Problem ========== -->
@@ -231,26 +237,26 @@
     <div class="card-row">
         <div class="card">
             <div style="font-size:0.75em;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:2px;margin-bottom:10px;">LEAD-IN</div>
-            <div class="icon">😰</div>
+            <img src="img/parts_library.png" style="height:100px;border-radius:8px;margin:8px 0;opacity:0.7;" alt="Parts">
             <h3>Face the n³ Wall</h3>
-            <p>User opens the app. Types: <em>"A robotic arm that picks up cups."</em> Drags blocks onto canvas.</p>
-            <div style="margin-top:12px;font-size:0.8em;color:rgba(255,255,255,0.25);">Low barrier. Curiosity.</div>
+            <p>Types: <em>"A robotic arm."</em><br>Drags blocks onto canvas.</p>
+            <div style="margin-top:8px;font-size:0.8em;color:rgba(255,255,255,0.25);">Low barrier. Curiosity.</div>
         </div>
         <div class="arrow-between">→</div>
         <div class="card highlight">
             <div style="font-size:0.75em;color:#ffb74d;font-weight:700;letter-spacing:2px;margin-bottom:10px;">HERO MOMENT ✨</div>
-            <div class="icon">🤯</div>
+            <img src="img/hero_moment.webp" style="height:100px;border-radius:8px;margin:8px 0;" alt="Simulation">
             <h3 class="orange">IT MOVES!</h3>
-            <p>Instant 3D simulation. Gears turn. Motors spin. Physics validates in real time.</p>
-            <div style="margin-top:12px;font-size:0.9em;color:#ffb74d;font-weight:700;">"HOLY F*CK!"</div>
+            <p>3D simulation. Gears turn. Physics validates in real time.</p>
+            <div style="margin-top:8px;font-size:0.9em;color:#ffb74d;font-weight:700;">"HOLY F*CK!"</div>
         </div>
         <div class="arrow-between">→</div>
         <div class="card">
             <div style="font-size:0.75em;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:2px;margin-bottom:10px;">WHAT'S NEXT</div>
-            <div class="icon">💰</div>
+            <img src="img/escrow.png" style="height:100px;border-radius:8px;margin:8px 0;opacity:0.7;" alt="Escrow">
             <h3>Earn Forever</h3>
-            <p>Mint on-chain. Others fork. Auto-royalties flow. Crowdfund → Manufacture → Ship.</p>
-            <div style="margin-top:12px;font-size:0.8em;color:rgba(255,255,255,0.25);">Empowerment. Passive income.</div>
+            <p>Mint on-chain. Others fork. Auto-royalties flow.</p>
+            <div style="margin-top:8px;font-size:0.8em;color:rgba(255,255,255,0.25);">Empowerment. Passive income.</div>
         </div>
     </div>
 </div>
@@ -367,27 +373,31 @@
     <div class="logo">▣ PRODUCTION MARKET</div>
     <div class="slide-num">09 / 10</div>
     <h2>Architecture</h2>
-    <div class="card-row" style="max-width:900px;">
-        <div class="card" style="flex:1;">
-            <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:2px;margin-bottom:10px;">USER / AGENT</div>
-            <div class="icon">🧑‍💻</div>
-            <p style="font-size:0.85em;">"I want a robotic arm"</p>
+    <div style="display:flex;align-items:center;gap:40px;width:90%;max-width:1100px;">
+        <div style="flex:0.6;text-align:center;">
+            <img src="img/agent_network.png" style="max-height:300px;border-radius:14px;opacity:0.9;" alt="Agent Network">
+            <div style="font-size:0.7em;color:rgba(255,255,255,0.2);margin-top:8px;">Three-agent ecosystem</div>
         </div>
-        <div class="arrow-between">↓</div>
-        <div class="card" style="flex:1.5;border-color:rgba(92,154,255,0.3);">
-            <div style="font-size:0.7em;color:#5c9aff;font-weight:700;letter-spacing:2px;margin-bottom:10px;">DESIGN ENGINE (OFF-CHAIN)</div>
-            <p style="font-size:0.85em;">Mechanical analysis · Physics sim · Complexity scoring</p>
-            <div style="font-size:0.7em;margin-top:8px;color:rgba(255,255,255,0.25);">Proprietary · Privacy-preserving</div>
-        </div>
-        <div class="arrow-between">↓</div>
-        <div class="card" style="flex:1.5;border-color:rgba(102,187,106,0.3);">
-            <div style="font-size:0.7em;color:#66bb6a;font-weight:700;letter-spacing:2px;margin-bottom:10px;">PROTOCOL (ON-CHAIN)</div>
-            <p style="font-size:0.85em;">ProductionMarket.sol on Base<br>CREATE / FORK / REMIX + auto-royalties<br>Proof Chain + Escrow</p>
-        </div>
-        <div class="arrow-between">↓</div>
-        <div class="card" style="flex:1;">
-            <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:2px;margin-bottom:10px;">STORAGE & ID</div>
-            <p style="font-size:0.85em;">IPFS · ERC-8004 · ENS</p>
+        <div class="card-row" style="max-width:600px;flex:1;flex-direction:column;gap:12px;">
+            <div class="card" style="padding:15px 20px;">
+                <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;">USER / AGENT</div>
+                <p style="font-size:0.85em;">"I want a robotic arm" → prompt + parts</p>
+            </div>
+            <div style="text-align:center;font-size:1.2em;color:rgba(255,255,255,0.15);">↓</div>
+            <div class="card" style="padding:15px 20px;border-color:rgba(92,154,255,0.3);">
+                <div style="font-size:0.7em;color:#5c9aff;font-weight:700;">DESIGN ENGINE (OFF-CHAIN)</div>
+                <p style="font-size:0.85em;">Mechanical analysis · Physics sim · Complexity scoring</p>
+            </div>
+            <div style="text-align:center;font-size:1.2em;color:rgba(255,255,255,0.15);">↓</div>
+            <div class="card" style="padding:15px 20px;border-color:rgba(102,187,106,0.3);">
+                <div style="font-size:0.7em;color:#66bb6a;font-weight:700;">PROTOCOL (ON-CHAIN · BASE L2)</div>
+                <p style="font-size:0.85em;">ProductionMarket.sol · CREATE/FORK/REMIX · Proof Chain + Escrow</p>
+            </div>
+            <div style="text-align:center;font-size:1.2em;color:rgba(255,255,255,0.15);">↓</div>
+            <div class="card" style="padding:15px 20px;">
+                <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;">STORAGE & ID</div>
+                <p style="font-size:0.85em;">IPFS · ERC-8004 · Filecoin</p>
+            </div>
         </div>
     </div>
 </div>
