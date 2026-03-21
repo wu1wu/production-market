@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Market — Synthesis Pitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #fff; overflow: hidden; }
+        
+        .slide {
+            width: 100vw; height: 100vh;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 60px 80px; position: relative;
+        }
+        .slide.active { display: flex; }
+        
+        .slide-num {
+            position: absolute; bottom: 30px; right: 40px;
+            font-size: 1em; color: rgba(255,255,255,0.2); font-weight: 800;
+        }
+        .logo {
+            position: absolute; top: 30px; left: 40px;
+            font-size: 1.1em; font-weight: 800; color: rgba(255,255,255,0.3);
+            letter-spacing: 2px;
+        }
+        .crops-tag {
+            position: absolute; top: 30px; right: 40px;
+            font-size: 0.75em; padding: 6px 14px; border-radius: 20px;
+            background: rgba(46,125,50,0.15); color: #66bb6a; font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        h1 { font-size: 3.5em; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+        h2 { font-size: 2.2em; font-weight: 800; margin-bottom: 25px; }
+        .sub { font-size: 1.2em; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 700px; text-align: center; }
+        
+        .accent { color: #5c9aff; }
+        .green { color: #66bb6a; }
+        .orange { color: #ffb74d; }
+        .red { color: #ef5350; }
+        .purple { color: #ab47bc; }
+        .dim { color: rgba(255,255,255,0.35); }
+        
+        .card-row {
+            display: flex; gap: 25px; margin-top: 30px;
+            width: 90%; max-width: 1100px;
+        }
+        .card {
+            flex: 1; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 30px 25px;
+            text-align: center; backdrop-filter: blur(10px);
+        }
+        .card h3 { font-size: 1.2em; margin: 12px 0 8px; font-weight: 700; }
+        .card p { font-size: 0.9em; color: rgba(255,255,255,0.5); line-height: 1.6; }
+        .card .icon { font-size: 2.5em; margin-bottom: 5px; }
+        .card.highlight { border-color: rgba(92,154,255,0.4); background: rgba(92,154,255,0.06); }
+        .card.dim-card { opacity: 0.4; }
+        
+        .arrow-between { font-size: 2em; color: rgba(255,255,255,0.15); display: flex; align-items: center; }
+        
+        .flow-line {
+            display: flex; align-items: center; gap: 12px;
+            margin-top: 30px; flex-wrap: wrap; justify-content: center;
+        }
+        .flow-box {
+            padding: 14px 24px; border-radius: 12px;
+            font-weight: 700; font-size: 0.95em;
+        }
+        .flow-arrow { font-size: 1.5em; color: rgba(255,255,255,0.2); }
+        
+        .code-block {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 25px 30px;
+            font-family: 'Consolas', monospace; font-size: 0.85em;
+            text-align: left; line-height: 1.8;
+            max-width: 700px; width: 85%;
+            color: rgba(255,255,255,0.7);
+        }
+        .code-block .hl { color: #5c9aff; font-weight: 700; }
+        .code-block .val { color: #ffb74d; }
+        .code-block .ok { color: #66bb6a; }
+        .code-block .cm { color: rgba(255,255,255,0.25); }
+        
+        .compare-table {
+            width: 85%; max-width: 800px; margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .compare-table th, .compare-table td {
+            padding: 14px 20px; text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1em;
+        }
+        .compare-table th {
+            color: rgba(255,255,255,0.3); font-weight: 600;
+            font-size: 0.85em; letter-spacing: 1px; text-transform: uppercase;
+        }
+        
+        .big-num {
+            font-size: 5em; font-weight: 900;
+            background: linear-gradient(135deg, #5c9aff, #ab47bc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .crops-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 15px; width: 85%; max-width: 900px; margin-top: 20px;
+        }
+        .crops-item {
+            padding: 20px; border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .crops-item .letter {
+            font-size: 2em; font-weight: 900; margin-bottom: 8px;
+        }
+        .crops-item h4 { font-size: 1em; margin-bottom: 6px; color: rgba(255,255,255,0.8); }
+        .crops-item p { font-size: 0.8em; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+        /* Animations */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        .slide.active > * { animation: fadeUp 0.6s ease-out both; }
+        .slide.active > *:nth-child(2) { animation-delay: 0.15s; }
+        .slide.active > *:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active > *:nth-child(4) { animation-delay: 0.45s; }
+        .slide.active > *:nth-child(5) { animation-delay: 0.6s; }
+
+        /* Start overlay */
+        #start-overlay {
+            position: fixed; inset: 0; background: #0a0a0f;
+            z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; cursor: pointer;
+        }
+        #start-overlay .play-btn {
+            font-size: 4em; font-weight: 900; padding: 25px 55px;
+            border: 3px solid rgba(255,255,255,0.3); border-radius: 18px;
+            color: #fff; letter-spacing: 3px;
+            transition: all 0.3s;
+        }
+        #start-overlay:hover .play-btn { border-color: #5c9aff; color: #5c9aff; }
+
+        /* Progress bar */
+        #progress {
+            position: fixed; bottom: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, #5c9aff, #ab47bc);
+            z-index: 100; transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress" style="width:0%"></div>
+
+<!-- Start overlay -->
+<div id="start-overlay" onclick="startPitch()">
+    <div style="font-size:1.2em;color:rgba(255,255,255,0.3);margin-bottom:30px;letter-spacing:3px;">THE SYNTHESIS HACKATHON 2026</div>
+    <div class="play-btn">▶ PRODUCTION MARKET</div>
+    <div style="font-size:0.9em;color:rgba(255,255,255,0.2);margin-top:25px;">Click to begin · Auto-advances with narration</div>
+</div>
+
+<!-- ========== SLIDE 1: Hook ========== -->
+<div class="slide" id="s1">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">01 / 10</div>
+    <h1>What if <span class="accent">hardware ideas</span><br>could earn money<br><span class="dim">before</span> they're built?</h1>
+    <p class="sub">
+        99% of hardware ideas die because prototyping is too hard, too expensive, and nobody gets paid for partial work.
+    </p>
+</div>
+
+<!-- ========== SLIDE 2: Problem ========== -->
+<div class="slide" id="s2">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">02 / 10</div>
+    <h2>The <span class="red">n³ Problem</span></h2>
+    <p class="sub" style="margin-bottom:25px;">Hardware requires three expert skills simultaneously. Miss one and nothing works.</p>
+    <div class="card-row">
+        <div class="card">
+            <div class="icon">🔧</div>
+            <h3>3D Structure</h3>
+            <p>Parts, joints, transmission chains, mechanical paths</p>
+        </div>
+        <div class="arrow-between">×</div>
+        <div class="card">
+            <div class="icon">⚡</div>
+            <h3>Electronics</h3>
+            <p>Motors, sensors, I/O wiring, power management</p>
+        </div>
+        <div class="arrow-between">×</div>
+        <div class="card">
+            <div class="icon">💻</div>
+            <h3>Code & Logic</h3>
+            <p>State machines, PID control, feedback loops</p>
+        </div>
+    </div>
+    <div style="margin-top:25px;font-size:1.3em;font-weight:800;">
+        Difficulty = <span class="red">n × n × n</span> = <span class="red">n³</span>
+    </div>
+</div>
+
+<!-- ========== SLIDE 3: Zero-Sum vs Positive-Sum ========== -->
+<div class="slide" id="s3">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">03 / 10</div>
+    <h2>Two Market Paradigms</h2>
+    <div class="card-row">
+        <div class="card dim-card">
+            <div class="icon">🎰</div>
+            <h3>Prediction Market</h3>
+            <p style="color:rgba(255,255,255,0.4);">Bet on news outcomes<br>Wrong = lose all<br>Right = one-time payout<br><strong style="color:rgba(239,83,80,0.7);">Zero-sum. Nothing built.</strong></p>
+        </div>
+        <div class="arrow-between">→</div>
+        <div class="card highlight">
+            <div class="icon">🏭</div>
+            <h3 class="accent">Production Market</h3>
+            <p>Design hardware on-chain<br>Wrong = <span class="green">auto-refund</span><br>Right = <span class="green">perpetual royalties</span><br><strong class="green">Positive-sum. Real products ship.</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 4: UX - Three Moments ========== -->
+<div class="slide" id="s4">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="crops-tag">🎨 DESIGN THINKING</div>
+    <div class="slide-num">04 / 10</div>
+    <h2>The User Journey</h2>
+    <div class="card-row">
+        <div class="card">
+            <div style="font-size:0.75em;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:2px;margin-bottom:10px;">LEAD-IN</div>
+            <div class="icon">😰</div>
+            <h3>Face the n³ Wall</h3>
+            <p>User opens the app. Types: <em>"A robotic arm that picks up cups."</em> Drags blocks onto canvas.</p>
+            <div style="margin-top:12px;font-size:0.8em;color:rgba(255,255,255,0.25);">Low barrier. Curiosity.</div>
+        </div>
+        <div class="arrow-between">→</div>
+        <div class="card highlight">
+            <div style="font-size:0.75em;color:#ffb74d;font-weight:700;letter-spacing:2px;margin-bottom:10px;">HERO MOMENT ✨</div>
+            <div class="icon">🤯</div>
+            <h3 class="orange">IT MOVES!</h3>
+            <p>Instant 3D simulation. Gears turn. Motors spin. Physics validates in real time.</p>
+            <div style="margin-top:12px;font-size:0.9em;color:#ffb74d;font-weight:700;">"HOLY F*CK!"</div>
+        </div>
+        <div class="arrow-between">→</div>
+        <div class="card">
+            <div style="font-size:0.75em;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:2px;margin-bottom:10px;">WHAT'S NEXT</div>
+            <div class="icon">💰</div>
+            <h3>Earn Forever</h3>
+            <p>Mint on-chain. Others fork. Auto-royalties flow. Crowdfund → Manufacture → Ship.</p>
+            <div style="margin-top:12px;font-size:0.8em;color:rgba(255,255,255,0.25);">Empowerment. Passive income.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 5: How It Works ========== -->
+<div class="slide" id="s5">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">05 / 10</div>
+    <h2>Three On-Chain Operations</h2>
+    <div class="flow-line">
+        <div class="flow-box" style="background:rgba(92,154,255,0.1);border:2px solid rgba(92,154,255,0.3);">
+            <span class="accent" style="font-size:1.3em;">CREATE</span><br>
+            <span style="font-size:0.8em;color:rgba(255,255,255,0.4);">$0.10 → New original design</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(102,187,106,0.1);border:2px solid rgba(102,187,106,0.3);">
+            <span class="green" style="font-size:1.3em;">FORK</span><br>
+            <span style="font-size:0.8em;color:rgba(255,255,255,0.4);">$0.05 → Copy & improve → 5% royalty to parent</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(171,71,188,0.1);border:2px solid rgba(171,71,188,0.3);">
+            <span class="purple" style="font-size:1.3em;">REMIX</span><br>
+            <span style="font-size:0.8em;color:rgba(255,255,255,0.4);">$0.01 → Recombine parts → Split royalty to all</span>
+        </div>
+    </div>
+    <div style="margin-top:35px;font-size:1.1em;color:rgba(255,255,255,0.4);">
+        Every transaction → <span class="green">automatic royalty</span> to all upstream creators
+    </div>
+</div>
+
+<!-- ========== SLIDE 6: Proof of Complexity ========== -->
+<div class="slide" id="s6">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">06 / 10</div>
+    <h2>Proof of Complexity <span class="dim">(n³)</span></h2>
+    <p class="sub" style="margin-bottom:20px;">Every design carries an intrinsic complexity score. Higher complexity = more valuable = higher royalties.</p>
+    <div class="code-block">
+<span class="cm">// On-chain complexity scoring</span>
+<span class="hl">struct</span> Design {
+    <span class="val">structureScore</span>:   12   <span class="cm">// Parts × Joints × DOF × Path depth</span>
+    <span class="val">electronicScore</span>:  6    <span class="cm">// Actuators × Sensors × Modules</span>
+    <span class="val">logicScore</span>:       8    <span class="cm">// States × Behaviors × Feedback loops</span>
+    
+    <span class="ok">complexityScore</span>:  <span class="ok">576</span>  <span class="cm">// 12 × 6 × 8 = n³</span>
+    <span class="hl">metricsHash</span>:      0x1f2e3d...  <span class="cm">// Verify without revealing algorithm</span>
+}
+    </div>
+    <div style="margin-top:20px;font-size:0.95em;color:rgba(255,255,255,0.35);">
+        Algorithm is proprietary. Scores are transparent. Anyone can verify via hash.
+    </div>
+</div>
+
+<!-- ========== SLIDE 7: Proof Chain ========== -->
+<div class="slide" id="s7">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">07 / 10</div>
+    <h2>Proof Chain <span class="dim">— Design's Own Blockchain</span></h2>
+    <p class="sub" style="margin-bottom:20px;">Each design has its own mini-blockchain of verification steps.</p>
+    <div class="flow-line" style="gap:8px;">
+        <div class="flow-box" style="background:rgba(92,154,255,0.08);border:1px solid rgba(92,154,255,0.2);font-size:0.85em;">
+            <span class="accent">PoM</span><br><span class="dim" style="font-size:0.8em;">Mechanism exists</span>
+        </div>
+        <div class="flow-arrow" style="font-size:1.2em;">→</div>
+        <div class="flow-box" style="background:rgba(102,187,106,0.08);border:1px solid rgba(102,187,106,0.2);font-size:0.85em;">
+            <span class="green">PoSim</span><br><span class="dim" style="font-size:0.8em;">Physics passes</span>
+        </div>
+        <div class="flow-arrow" style="font-size:1.2em;">→</div>
+        <div class="flow-box" style="background:rgba(171,71,188,0.08);border:1px solid rgba(171,71,188,0.2);font-size:0.85em;">
+            <span class="purple">PoI</span><br><span class="dim" style="font-size:0.8em;">I/O integrated</span>
+        </div>
+        <div class="flow-arrow" style="font-size:1.2em;">→</div>
+        <div class="flow-box" style="background:rgba(255,183,77,0.08);border:1px solid rgba(255,183,77,0.2);font-size:0.85em;">
+            <span class="orange">PoP</span><br><span class="dim" style="font-size:0.8em;">Manufactured & shipped</span>
+        </div>
+    </div>
+    <div style="margin-top:30px;font-size:0.9em;color:rgba(255,255,255,0.3);max-width:600px;text-align:center;line-height:1.8;">
+        Each step is a block. Each block hashes the previous. Immutable, ordered, verifiable.<br>
+        <strong style="color:rgba(255,255,255,0.5);">Every Proof level unlocks earnings — not just the final product.</strong>
+    </div>
+</div>
+
+<!-- ========== SLIDE 8: CROPS ========== -->
+<div class="slide" id="s8">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="crops-tag">🌾 CROPS COMPLIANCE</div>
+    <div class="slide-num">08 / 10</div>
+    <h2>Built for CROPS</h2>
+    <div class="crops-grid">
+        <div class="crops-item">
+            <div class="letter accent">C</div>
+            <h4>Censorship Resistance</h4>
+            <p>Base L2. Anyone can CREATE / FORK / REMIX. No whitelists. Remove any intermediary and it still works.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter green">O</div>
+            <h4>Open Source</h4>
+            <p>Protocol 100% open source. Simulation engine is pluggable — anyone can build their own arbiter.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter purple">P</div>
+            <h4>Privacy</h4>
+            <p>Design hash on-chain, files on IPFS. User controls what to reveal. Algorithm stays private.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter orange">S</div>
+            <h4>Security</h4>
+            <p>Escrow auto-refunds. Contracts auditable. Team disappears? Protocol runs forever. Users never trapped.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 9: Architecture ========== -->
+<div class="slide" id="s9">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">09 / 10</div>
+    <h2>Architecture</h2>
+    <div class="card-row" style="max-width:900px;">
+        <div class="card" style="flex:1;">
+            <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:2px;margin-bottom:10px;">USER / AGENT</div>
+            <div class="icon">🧑‍💻</div>
+            <p style="font-size:0.85em;">"I want a robotic arm"</p>
+        </div>
+        <div class="arrow-between">↓</div>
+        <div class="card" style="flex:1.5;border-color:rgba(92,154,255,0.3);">
+            <div style="font-size:0.7em;color:#5c9aff;font-weight:700;letter-spacing:2px;margin-bottom:10px;">DESIGN ENGINE (OFF-CHAIN)</div>
+            <p style="font-size:0.85em;">Mechanical analysis · Physics sim · Complexity scoring</p>
+            <div style="font-size:0.7em;margin-top:8px;color:rgba(255,255,255,0.25);">Proprietary · Privacy-preserving</div>
+        </div>
+        <div class="arrow-between">↓</div>
+        <div class="card" style="flex:1.5;border-color:rgba(102,187,106,0.3);">
+            <div style="font-size:0.7em;color:#66bb6a;font-weight:700;letter-spacing:2px;margin-bottom:10px;">PROTOCOL (ON-CHAIN)</div>
+            <p style="font-size:0.85em;">ProductionMarket.sol on Base<br>CREATE / FORK / REMIX + auto-royalties<br>Proof Chain + Escrow</p>
+        </div>
+        <div class="arrow-between">↓</div>
+        <div class="card" style="flex:1;">
+            <div style="font-size:0.7em;color:rgba(255,255,255,0.25);font-weight:700;letter-spacing:2px;margin-bottom:10px;">STORAGE & ID</div>
+            <p style="font-size:0.85em;">IPFS · ERC-8004 · ENS</p>
+        </div>
+    </div>
+</div>
+
+<!-- ========== SLIDE 10: Final ========== -->
+<div class="slide" id="s10">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">10 / 10</div>
+    <h1 style="font-size:3em;">From <span class="accent">Prediction</span><br>to <span class="green">Production</span>.</h1>
+    <p class="sub" style="margin-top:15px;margin-bottom:30px;">
+        Turning risk into shared upside.<br>
+        Democratizing physics. Rewarding every step.
+    </p>
+    <div style="display:flex;gap:35px;margin-bottom:35px;">
+        <div style="text-align:center;">
+            <div style="font-size:2em;">⛏️</div>
+            <div style="font-size:0.8em;color:rgba(255,255,255,0.4);margin-top:5px;">Design & earn</div>
+        </div>
+        <div style="font-size:1.5em;color:rgba(255,255,255,0.15);display:flex;align-items:center;">→</div>
+        <div style="text-align:center;">
+            <div style="font-size:2em;">🖥️</div>
+            <div style="font-size:0.8em;color:rgba(255,255,255,0.4);margin-top:5px;">Simulate & verify</div>
+        </div>
+        <div style="font-size:1.5em;color:rgba(255,255,255,0.15);display:flex;align-items:center;">→</div>
+        <div style="text-align:center;">
+            <div style="font-size:2em;">💰</div>
+            <div style="font-size:0.8em;color:rgba(255,255,255,0.4);margin-top:5px;">Fund & manufacture</div>
+        </div>
+        <div style="font-size:1.5em;color:rgba(255,255,255,0.15);display:flex;align-items:center;">→</div>
+        <div style="text-align:center;">
+            <div style="font-size:2em;">📦</div>
+            <div style="font-size:0.8em;color:rgba(255,255,255,0.4);margin-top:5px;">Ship & earn forever</div>
+        </div>
+    </div>
+    <div style="font-size:1.5em;font-weight:900;color:rgba(255,255,255,0.6);">
+        Positive-Sum. On-Chain. <span class="accent">Ready.</span>
+    </div>
+    <div style="margin-top:30px;font-size:0.8em;color:rgba(255,255,255,0.2);">
+        Wu Xi · Agent #29549 · Harness: Antigravity (Gemini) · github.com/wu1wu/production-market
+    </div>
+</div>
+
+<script>
+    const TOTAL_SLIDES = 10;
+    let current = 0;
+    let autoTimer = null;
+    const SLIDE_DURATION = 12000; // 12 seconds per slide
+
+    const audioFiles = [
+        null, // index 0 unused
+        'pm_slide_01.mp3','pm_slide_02.mp3','pm_slide_03.mp3','pm_slide_04.mp3','pm_slide_05.mp3',
+        'pm_slide_06.mp3','pm_slide_07.mp3','pm_slide_08.mp3','pm_slide_09.mp3','pm_slide_10.mp3'
+    ];
+
+    function showSlide(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        const slide = document.getElementById('s' + n);
+        if (slide) {
+            slide.classList.add('active');
+            current = n;
+            document.getElementById('progress').style.width = ((n / TOTAL_SLIDES) * 100) + '%';
+            
+            // Try to play audio
+            const audioFile = audioFiles[n];
+            if (audioFile) {
+                try {
+                    const audio = new Audio(audioFile);
+                    audio.play().catch(() => {});
+                    audio.onended = () => {
+                        if (current < TOTAL_SLIDES) {
+                            setTimeout(() => showSlide(current + 1), 1000);
+                        }
+                    };
+                    return; // Don't set timer if audio controls advancement
+                } catch(e) {}
+            }
+            
+            // Fallback: auto-advance after duration
+            clearTimeout(autoTimer);
+            if (n < TOTAL_SLIDES) {
+                autoTimer = setTimeout(() => showSlide(n + 1), SLIDE_DURATION);
+            }
+        }
+    }
+
+    function startPitch() {
+        document.getElementById('start-overlay').style.display = 'none';
+        showSlide(1);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            clearTimeout(autoTimer);
+            if (current < TOTAL_SLIDES) showSlide(current + 1);
+        } else if (e.key === 'ArrowLeft') {
+            clearTimeout(autoTimer);
+            if (current > 1) showSlide(current - 1);
+        }
+    });
+
+    // Click navigation
+    document.addEventListener('click', (e) => {
+        if (document.getElementById('start-overlay').style.display === 'none') {
+            clearTimeout(autoTimer);
+            if (current < TOTAL_SLIDES) showSlide(current + 1);
+        }
+    });
+</script>
+</body>
+</html>
