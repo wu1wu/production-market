@@ -8,7 +8,7 @@ async function main() {
   const ProductionMarket = await hre.ethers.getContractFactory("ProductionMarket");
   
   // Platform fee receiver = deployer
-  const contract = await ProductionMarket.deploy(deployer.address);
+  const contract = await ProductionMarket.deploy();
   await contract.waitForDeployment();
 
   const address = await contract.getAddress();

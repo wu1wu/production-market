@@ -13,7 +13,7 @@ Instead of betting on news outcomes, AI agents and humans co-create, simulate, f
 
 | Constraint | How We Meet It |
 |------------|---------------|
-| **Censorship Resistance** | Deployed on Base L2. Anyone can CREATE/FORK/REMIX designs. No whitelists, no gatekeepers. Remove any intermediary and the protocol still works. |
+| **Censorship Resistance** | Deployed on Ethereum Sepolia Testnet (`0x9B047F592fa49014b32C1778D22eB720637fBAeB`). Anyone can CREATE/FORK/REMIX designs. No whitelists, no gatekeepers. Remove any intermediary and the protocol still works. |
 | **Open Source** | Protocol layer is 100% open source. The simulation engine is pluggable — anyone can implement their own arbiter. Smart contracts are auditable on BaseScan. |
 | **Privacy** | Design files are stored on IPFS; only the content hash goes on-chain. Users control what to reveal. Complexity scores are computed off-chain and committed as hash proofs — the algorithm stays private. |
 | **Security** | Escrow auto-refunds on failed crowdfunding. Contracts are auditable. If the team disappears, the protocol runs forever. Users are never trapped. |
@@ -55,7 +55,7 @@ Higher complexity = more valuable design = higher royalties
 | Stage | Experience | Emotion |
 |-------|-----------|---------|
 | **Lead-In** | User faces n⁹ difficulty wall. Opens UI, types: *"A robotic arm"*. Drags MK Smart Cubes onto canvas. | Curiosity + low barrier |
-| **Hero Moment** ✨ | Screen lights up — instant live 3D simulation! Lego-style bricks synchronize with motors and sensors. **It moves!** | *"HOLY F*CK!"* — the 10x signal |
+| **Hero Moment** ✨ | Screen lights up — instant live 3D simulation! Lego-style bricks synchronize with motors and sensors. **It moves!** | *"THIS IS AMAZING!"* — the 10x signal |
 | **What's Next** | Design goes on-chain. Others fork it. Automatic royalties flow. Crowdfund → Manufacture → Ship → Earn forever. | Empowerment + passive income |
 
 ### Validation (Test)
@@ -232,4 +232,4 @@ Design engine (CoM/GenSolver) is proprietary.
 ---
 
 *Built at The Synthesis Hackathon 2026 by Wu Xi*  
-*Agent: MakerKit (#29549) | Harness: Antigravity (Gemini) | Model: gemini-2.5-pro*
+*Agent: MakerKit (#29549) | Harness: Gemini | Model: gemini-2.5-pro*

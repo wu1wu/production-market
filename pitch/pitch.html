@@ -148,6 +148,29 @@
             background: linear-gradient(90deg, #5c9aff, #ab47bc);
             z-index: 100; transition: width 0.5s ease;
         }
+
+        /* Fake cursor for recording */
+        #fake-cursor { position:fixed;z-index:10000;pointer-events:none;width:24px;height:24px;display:none; }
+        #fake-cursor .cursor-dot { width:24px;height:24px;border-radius:50%;background:rgba(92,154,255,0.7);border:2px solid rgba(255,255,255,0.8);box-shadow:0 0 20px rgba(92,154,255,0.5);transition:transform 0.15s; }
+        #fake-cursor.clicking .cursor-dot { transform:scale(0.6); }
+        #fake-cursor .click-ring { position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(92,154,255,0.3);transform:translate(-50%,-50%);opacity:0; }
+        #fake-cursor.clicking .click-ring { animation:clickRipple 0.5s ease-out; }
+        @keyframes clickRipple { 0%{width:0;height:0;opacity:0.6} 100%{width:60px;height:60px;opacity:0} }
+
+        /* Print: show all slides, each on its own page */
+        @media print {
+            body { overflow: visible; background: #0a0a0f; }
+            #start-overlay, #progress, #fake-cursor { display: none !important; }
+            .slide {
+                display: flex !important;
+                page-break-after: always;
+                width: 100vw; height: 100vh;
+                position: relative;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .slide:last-of-type { page-break-after: avoid; }
+        }
     </style>
 </head>
 <body>
@@ -155,25 +178,24 @@
 <!-- Progress bar -->
 <div id="progress" style="width:0%"></div>
 
-<!-- Start overlay -->
-<div id="start-overlay" onclick="startPitch()">
+<div id="start-overlay" onclick="startCountdown()">
     <div style="font-size:1.2em;color:rgba(255,255,255,0.3);margin-bottom:30px;letter-spacing:3px;">THE SYNTHESIS HACKATHON 2026</div>
     <div class="play-btn">▶ PRODUCTION MARKET</div>
-    <div style="font-size:0.9em;color:rgba(255,255,255,0.2);margin-top:25px;">Click to begin · Auto-advances with narration</div>
+    <div id="countdown" style="font-size:5em;font-weight:900;color:#5c9aff;margin-top:30px;min-height:80px;">Click to start</div>
 </div>
 
 <!-- ========== SLIDE 1: Hook ========== -->
 <div class="slide" id="s1">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">01 / 10</div>
+    <div class="slide-num">01 / 11</div>
     <div style="display:flex;align-items:center;gap:50px;width:90%;max-width:1100px;">
         <div style="flex:1.2;">
             <h1 style="text-align:left;">What if <span class="accent">hardware ideas</span><br>could earn money<br><span class="dim">before</span> they're built?</h1>
             <p class="sub" style="text-align:left;">99% of hardware ideas die because prototyping is too hard, too expensive, and nobody gets paid for partial work.</p>
         </div>
         <div style="flex:0.8;text-align:center;">
-            <img src="img/parts_library.png" style="max-height:350px;border-radius:16px;opacity:0.85;" alt="Parts Library">
-            <div style="font-size:0.7em;color:rgba(255,255,255,0.2);margin-top:8px;">1000+ modular building blocks</div>
+            <img src="img/hardware_prototype.png" style="max-height:350px;border-radius:16px;opacity:0.85;" alt="Hardware Prototype">
+            <div style="font-size:0.7em;color:rgba(255,255,255,0.2);margin-top:8px;">From idea to working prototype</div>
         </div>
     </div>
 </div>
@@ -181,24 +203,24 @@
 <!-- ========== SLIDE 2: Problem ========== -->
 <div class="slide" id="s2">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">02 / 10</div>
+    <div class="slide-num">02 / 11</div>
     <h2>The <span class="red">n³ Problem</span></h2>
     <p class="sub" style="margin-bottom:25px;">Hardware requires three expert skills simultaneously. Miss one and nothing works.</p>
     <div class="card-row">
         <div class="card">
-            <div class="icon">🔧</div>
+            <img src="img/hardware_gears.png" style="height:110px;border-radius:8px;margin-bottom:8px;opacity:0.8;" alt="Gears">
             <h3>3D Structure</h3>
             <p>Parts, joints, transmission chains, mechanical paths</p>
         </div>
         <div class="arrow-between">×</div>
         <div class="card">
-            <div class="icon">⚡</div>
+            <img src="img/electronics_board.png" style="height:110px;border-radius:8px;margin-bottom:8px;opacity:0.8;" alt="Electronics">
             <h3>Electronics</h3>
             <p>Motors, sensors, I/O wiring, power management</p>
         </div>
         <div class="arrow-between">×</div>
         <div class="card">
-            <div class="icon">💻</div>
+            <img src="img/code_logic.png" style="height:110px;border-radius:8px;margin-bottom:8px;opacity:0.8;" alt="Code">
             <h3>Code & Logic</h3>
             <p>State machines, PID control, feedback loops</p>
         </div>
@@ -211,7 +233,7 @@
 <!-- ========== SLIDE 3: Zero-Sum vs Positive-Sum ========== -->
 <div class="slide" id="s3">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">03 / 10</div>
+    <div class="slide-num">03 / 11</div>
     <h2>Two Market Paradigms</h2>
     <div class="card-row">
         <div class="card dim-card">
@@ -226,13 +248,14 @@
             <p>Design hardware on-chain<br>Wrong = <span class="green">auto-refund</span><br>Right = <span class="green">perpetual royalties</span><br><strong class="green">Positive-sum. Real products ship.</strong></p>
         </div>
     </div>
+    <img src="img/prediction_vs_production.png" style="max-height:200px;border-radius:12px;margin-top:20px;opacity:0.7;" alt="Markets comparison">
 </div>
 
 <!-- ========== SLIDE 4: UX - Three Moments ========== -->
 <div class="slide" id="s4">
     <div class="logo">▣ PRODUCTION MARKET</div>
     <div class="crops-tag">🎨 DESIGN THINKING</div>
-    <div class="slide-num">04 / 10</div>
+    <div class="slide-num">04 / 11</div>
     <h2>The User Journey</h2>
     <div class="card-row">
         <div class="card">
@@ -248,7 +271,7 @@
             <img src="img/hero_moment.webp" style="height:100px;border-radius:8px;margin:8px 0;" alt="Simulation">
             <h3 class="orange">IT MOVES!</h3>
             <p>3D simulation. Gears turn. Physics validates in real time.</p>
-            <div style="margin-top:8px;font-size:0.9em;color:#ffb74d;font-weight:700;">"HOLY F*CK!"</div>
+            <div style="margin-top:8px;font-size:0.9em;color:#ffb74d;font-weight:700;">"THIS IS AMAZING!"</div>
         </div>
         <div class="arrow-between">→</div>
         <div class="card">
@@ -264,7 +287,7 @@
 <!-- ========== SLIDE 5: How It Works ========== -->
 <div class="slide" id="s5">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">05 / 10</div>
+    <div class="slide-num">05 / 11</div>
     <h2>Three On-Chain Operations</h2>
     <div class="flow-line">
         <div class="flow-box" style="background:rgba(92,154,255,0.1);border:2px solid rgba(92,154,255,0.3);">
@@ -282,15 +305,16 @@
             <span style="font-size:0.8em;color:rgba(255,255,255,0.4);">$0.01 → Recombine parts → Split royalty to all</span>
         </div>
     </div>
-    <div style="margin-top:35px;font-size:1.1em;color:rgba(255,255,255,0.4);">
-        Every transaction → <span class="green">automatic royalty</span> to all upstream creators
+    <div style="margin-top:25px;display:flex;align-items:center;gap:20px;">
+        <img src="img/mk_cube_cad.png" style="height:120px;border-radius:10px;opacity:0.7;" alt="Design example">
+        <div style="font-size:1.1em;color:rgba(255,255,255,0.4);">Every transaction → <span class="green">automatic royalty</span> to all upstream creators</div>
     </div>
 </div>
 
 <!-- ========== SLIDE 6: Proof of Complexity ========== -->
 <div class="slide" id="s6">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">06 / 10</div>
+    <div class="slide-num">06 / 11</div>
     <h2>Proof of Complexity <span class="dim">(n³)</span></h2>
     <p class="sub" style="margin-bottom:20px;">Every design carries an intrinsic complexity score. Higher complexity = more valuable = higher royalties.</p>
     <div class="code-block">
@@ -312,7 +336,7 @@
 <!-- ========== SLIDE 7: Proof Chain ========== -->
 <div class="slide" id="s7">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">07 / 10</div>
+    <div class="slide-num">07 / 11</div>
     <h2>Proof Chain <span class="dim">— Design's Own Blockchain</span></h2>
     <p class="sub" style="margin-bottom:20px;">Each design has its own mini-blockchain of verification steps.</p>
     <div class="flow-line" style="gap:8px;">
@@ -332,9 +356,12 @@
             <span class="orange">PoP</span><br><span class="dim" style="font-size:0.8em;">Manufactured & shipped</span>
         </div>
     </div>
-    <div style="margin-top:30px;font-size:0.9em;color:rgba(255,255,255,0.3);max-width:600px;text-align:center;line-height:1.8;">
-        Each step is a block. Each block hashes the previous. Immutable, ordered, verifiable.<br>
-        <strong style="color:rgba(255,255,255,0.5);">Every Proof level unlocks earnings — not just the final product.</strong>
+    <div style="margin-top:20px;display:flex;align-items:center;gap:20px;">
+        <img src="img/blockchain_chain.png" style="height:150px;border-radius:10px;opacity:0.7;" alt="Chain">
+        <div style="font-size:0.9em;color:rgba(255,255,255,0.3);max-width:500px;line-height:1.8;">
+            Each step is a block. Each block hashes the previous. Immutable, ordered, verifiable.<br>
+            <strong style="color:rgba(255,255,255,0.5);">Every Proof level unlocks earnings — not just the final product.</strong>
+        </div>
     </div>
 </div>
 
@@ -342,7 +369,7 @@
 <div class="slide" id="s8">
     <div class="logo">▣ PRODUCTION MARKET</div>
     <div class="crops-tag">🌾 CROPS COMPLIANCE</div>
-    <div class="slide-num">08 / 10</div>
+    <div class="slide-num">08 / 11</div>
     <h2>Built for CROPS</h2>
     <div class="crops-grid">
         <div class="crops-item">
@@ -366,12 +393,13 @@
             <p>Escrow auto-refunds. Contracts auditable. Team disappears? Protocol runs forever. Users never trapped.</p>
         </div>
     </div>
+    <img src="img/security_shield.png" style="max-height:150px;border-radius:12px;margin-top:15px;opacity:0.6;" alt="Security">
 </div>
 
 <!-- ========== SLIDE 9: Architecture ========== -->
 <div class="slide" id="s9">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">09 / 10</div>
+    <div class="slide-num">09 / 11</div>
     <h2>Architecture</h2>
     <div style="display:flex;align-items:center;gap:40px;width:90%;max-width:1100px;">
         <div style="flex:0.6;text-align:center;">
@@ -402,10 +430,56 @@
     </div>
 </div>
 
-<!-- ========== SLIDE 10: Final ========== -->
+
+<!-- ========== SLIDE 10: Tech Stack & Tracks ========== -->
 <div class="slide" id="s10">
     <div class="logo">▣ PRODUCTION MARKET</div>
-    <div class="slide-num">10 / 10</div>
+    <div class="crops-tag">🔧 INTEGRATIONS</div>
+    <div class="slide-num">10 / 11</div>
+    <h2>Built With <span class="accent">Partner Tech</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;width:90%;max-width:1100px;margin-top:15px;">
+        <div class="card highlight" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#5c9aff;font-weight:700;letter-spacing:1px;margin-bottom:6px;">IDENTITY</div>
+            <h3 style="font-size:1.05em;">ERC-8004</h3>
+            <p style="font-size:0.8em;">On-chain agent identity on Base Mainnet. Every creator has a permanent, self-sovereign presence.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">✅ Live on BaseScan</div>
+        </div>
+        <div class="card highlight" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#66bb6a;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ESCROW</div>
+            <h3 style="font-size:1.05em;">Arkhai Escrow</h3>
+            <p style="font-size:0.8em;">Conditional payments — auto-refund if production fails, perpetual royalties if it ships.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">ProductionMarket.sol</div>
+        </div>
+        <div class="card" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#ab47bc;font-weight:700;letter-spacing:1px;margin-bottom:6px;">STORAGE</div>
+            <h3 style="font-size:1.05em;">Filecoin / IPFS</h3>
+            <p style="font-size:0.8em;">Design files on decentralized storage. Hash on-chain. User controls disclosure.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">Permanent, censorship-resistant</div>
+        </div>
+        <div class="card" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#ffb74d;font-weight:700;letter-spacing:1px;margin-bottom:6px;">COMPUTE</div>
+            <h3 style="font-size:1.05em;">EigenLayer AVS</h3>
+            <p style="font-size:0.8em;">Physics simulation verification as an Actively Validated Service.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">Verifiable off-chain compute</div>
+        </div>
+        <div class="card" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#ef5350;font-weight:700;letter-spacing:1px;margin-bottom:6px;">CHAIN</div>
+            <h3 style="font-size:1.05em;">Base L2</h3>
+            <p style="font-size:0.8em;">Sub-cent gas fees. Designs priced by creators. Fork royalties flow automatically to originators.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">Ethereum security</div>
+        </div>
+        <div class="card" style="padding:18px 15px;">
+            <div style="font-size:0.65em;color:#5c9aff;font-weight:700;letter-spacing:1px;margin-bottom:6px;">AGENT</div>
+            <h3 style="font-size:1.05em;">Let Agent Cook</h3>
+            <p style="font-size:0.8em;">Autonomous agent evaluates designs, scores complexity, triggers on-chain operations.</p>
+            <div style="margin-top:8px;font-size:0.7em;color:rgba(255,255,255,0.25);">Agent-to-agent negotiation</div>
+        </div>
+    </div>
+</div>
+<!-- ========== SLIDE 11: Final ========== -->
+<div class="slide" id="s11">
+    <div class="logo">▣ PRODUCTION MARKET</div>
+    <div class="slide-num">11 / 11</div>
     <h1 style="font-size:3em;">From <span class="accent">Prediction</span><br>to <span class="green">Production</span>.</h1>
     <p class="sub" style="margin-top:15px;margin-bottom:30px;">
         Turning risk into shared upside.<br>
@@ -435,77 +509,101 @@
     <div style="font-size:1.5em;font-weight:900;color:rgba(255,255,255,0.6);">
         Positive-Sum. On-Chain. <span class="accent">Ready.</span>
     </div>
-    <div style="margin-top:30px;font-size:0.8em;color:rgba(255,255,255,0.2);">
-        Wu Xi · Agent #29549 · Harness: Antigravity (Gemini) · github.com/wu1wu/production-market
+    <img src="img/final_vision.png" style="max-height:180px;border-radius:12px;margin-top:20px;opacity:0.6;" alt="Vision">
+    <div style="margin-top:15px;font-size:0.8em;color:rgba(255,255,255,0.2);">
+        Wu Xi · Agent #29549 · Harness: Gemini · github.com/wu1wu/production-market
     </div>
 </div>
 
+<!-- Fake cursor for recording -->
+<div id="fake-cursor"><div class="cursor-dot"></div><div class="click-ring"></div></div>
+
 <script>
-    const TOTAL_SLIDES = 10;
+    const TOTAL_SLIDES = 11;
     let current = 0;
-    let autoTimer = null;
-    const SLIDE_DURATION = 12000; // 12 seconds per slide
+    let currentAudio = null;
+    let advanceTimer = null;
 
     const audioFiles = [
-        null, // index 0 unused
+        null,
         'pm_slide_01.mp3','pm_slide_02.mp3','pm_slide_03.mp3','pm_slide_04.mp3','pm_slide_05.mp3',
-        'pm_slide_06.mp3','pm_slide_07.mp3','pm_slide_08.mp3','pm_slide_09.mp3','pm_slide_10.mp3'
+        'pm_slide_06.mp3','pm_slide_07.mp3','pm_slide_08.mp3','pm_slide_09.mp3',null,'pm_slide_10.mp3'
     ];
 
+    function stopAll() {
+        // Stop audio
+        if (currentAudio) {
+            currentAudio.onended = null;
+            currentAudio.onerror = null;
+            currentAudio.pause();
+            currentAudio = null;
+        }
+        // Cancel any pending auto-advance
+        clearTimeout(advanceTimer);
+        advanceTimer = null;
+    }
+
+    function scheduleAdvance(delayMs) {
+        clearTimeout(advanceTimer);
+        if (current < TOTAL_SLIDES) {
+            advanceTimer = setTimeout(() => {
+                advanceTimer = null;
+                showSlide(current + 1);
+            }, delayMs);
+        }
+    }
+
     function showSlide(n) {
+        stopAll();
         document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
         const slide = document.getElementById('s' + n);
-        if (slide) {
-            slide.classList.add('active');
-            current = n;
-            document.getElementById('progress').style.width = ((n / TOTAL_SLIDES) * 100) + '%';
-            
-            // Try to play audio
-            const audioFile = audioFiles[n];
-            if (audioFile) {
-                try {
-                    const audio = new Audio(audioFile);
-                    audio.play().catch(() => {});
-                    audio.onended = () => {
-                        if (current < TOTAL_SLIDES) {
-                            setTimeout(() => showSlide(current + 1), 1000);
-                        }
-                    };
-                    return; // Don't set timer if audio controls advancement
-                } catch(e) {}
-            }
-            
-            // Fallback: auto-advance after duration
-            clearTimeout(autoTimer);
-            if (n < TOTAL_SLIDES) {
-                autoTimer = setTimeout(() => showSlide(n + 1), SLIDE_DURATION);
-            }
+        if (!slide) return;
+
+        slide.classList.add('active');
+        current = n;
+        document.getElementById('progress').style.width = ((n / TOTAL_SLIDES) * 100) + '%';
+
+        const audioFile = audioFiles[n];
+        if (audioFile) {
+            currentAudio = new Audio(audioFile);
+            // ONLY advance AFTER audio finishes + 3 seconds reading time
+            currentAudio.onended = () => {
+                currentAudio = null;
+                scheduleAdvance(3000);
+            };
+            currentAudio.onerror = () => {
+                currentAudio = null;
+                scheduleAdvance(8000);
+            };
+            currentAudio.play().catch(() => {
+                currentAudio = null;
+                scheduleAdvance(8000);
+            });
+        } else {
+            // No audio (e.g. slide 10) — wait 10 seconds then advance
+            scheduleAdvance(10000);
         }
     }
 
-    function startPitch() {
-        document.getElementById('start-overlay').style.display = 'none';
-        showSlide(1);
+    // Click overlay → 5-second countdown → auto-start
+    // User click satisfies browser autoplay policy
+    function startCountdown() {
+        const overlay = document.getElementById('start-overlay');
+        overlay.onclick = null; // prevent double-click
+        const cd = document.getElementById('countdown');
+        let count = 5;
+        cd.textContent = count;
+        const timer = setInterval(() => {
+            count--;
+            if (count > 0) {
+                cd.textContent = count;
+            } else {
+                clearInterval(timer);
+                overlay.style.display = 'none';
+                showSlide(1);
+            }
+        }, 1000);
     }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === ' ') {
-            clearTimeout(autoTimer);
-            if (current < TOTAL_SLIDES) showSlide(current + 1);
-        } else if (e.key === 'ArrowLeft') {
-            clearTimeout(autoTimer);
-            if (current > 1) showSlide(current - 1);
-        }
-    });
-
-    // Click navigation
-    document.addEventListener('click', (e) => {
-        if (document.getElementById('start-overlay').style.display === 'none') {
-            clearTimeout(autoTimer);
-            if (current < TOTAL_SLIDES) showSlide(current + 1);
-        }
-    });
 </script>
 </body>
 </html>

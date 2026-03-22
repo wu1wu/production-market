@@ -26,6 +26,11 @@ module.exports = {
   },
   networks: {
     hardhat: {},
+    sepolia: {
+      url: "https://ethereum-sepolia-rpc.publicnode.com",
+      accounts: [PRIVATE_KEY],
+      chainId: 11155111
+    },
     baseSepolia: {
       url: "https://sepolia.base.org",
       accounts: [PRIVATE_KEY],
@@ -42,5 +47,8 @@ module.exports = {
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts"
+  },
+  etherscan: {
+    apiKey: "Y12BH39JU7KZU77HYU5AZPFKIC5Q2DENZF"
   }
 };
