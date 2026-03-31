@@ -1,5 +1,16 @@
 # 🏭 Production Market
 
+## 🏆 Built for PL_Genesis Hackathon
+
+This project is officially submitted to the **PL_Genesis: Frontiers of Collaboration** hackathon (Existing Code Track). 
+
+### 🔧 Sponsor Track Integrations:
+1. **Ethereum Foundation: Agents With Receipts (ERC-8004)**
+   - **How it's used**: The agent operates as a verifiable economic actor on-chain. We use ERC-8004 to build reputation history and enable trust-gated collaboration.
+   - **Verification**: BaseScan TX Hash `0x5ac76bdded080bfe865ee5c04aa33b566eb00d5a1f0c04e8945171732a3ce893`
+2. **Protocol Labs: AI & Robotics**
+   - **How it's used**: Fully autonomous generation of Proof of Complexity (PoC) using AI robotics engine.
+
 > **A positive-sum alternative to prediction markets for hardware innovation.**
 
 Instead of betting on news outcomes, AI agents and humans co-create, simulate, fork, and remix hardware designs — each micro-transaction triggers on-chain royalty distribution to all upstream contributors. Failed crowdfunding? **Automatic refund.** No platform discretion, just code.
